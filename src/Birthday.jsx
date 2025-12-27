@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import photos from "./data/photos"; // photos array
+import { useEffect, useState, useRef } from "react";
+import photos from "./data/photos"; // your photos array
 
 const TOTAL_PHOTOS = photos.length;
 const BACKGROUND_PHOTOS = 60;
@@ -9,29 +9,37 @@ export default function Birthday() {
     const [direction, setDirection] = useState('next');
     const [isPlaying, setIsPlaying] = useState(false);
 
-    // Audio setup
-    const audio = new Audio("/music/song1.mp3"); // public folder se
-    audio.loop = true;
+    // Audio setup using useRef
+    const audioRef = useRef(null);
+
+    useEffect(() => {
+        audioRef.current = new Audio("/music/song1.mp3"); // public folder
+        audioRef.current.loop = true;
+
+        return () => {
+            audioRef.current.pause();
+            audioRef.current = null;
+        }
+    }, []);
 
     const toggleMusic = () => {
+        if (!audioRef.current) return;
+
         if (isPlaying) {
-            audio.pause();
+            audioRef.current.pause();
         } else {
-            audio.play();
+            audioRef.current.play();
         }
         setIsPlaying(!isPlaying);
     }
 
+    // Auto slideshow
     useEffect(() => {
         const interval = setInterval(() => {
             setDirection('next');
             setCurrentIndex(prev => (prev + 1) % TOTAL_PHOTOS);
         }, 5000);
         return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        return () => audio.pause(); // cleanup
     }, []);
 
     // Teddy bears floating
@@ -75,6 +83,7 @@ export default function Birthday() {
 
     // Stars, particles, hearts, snowflakes
     useEffect(() => {
+        // Stars
         const starsContainer = document.getElementById("stars");
         for (let i = 0; i < 80; i++) {
             const star = document.createElement("div");
@@ -85,6 +94,7 @@ export default function Birthday() {
             starsContainer.appendChild(star);
         }
 
+        // Particles
         const particlesContainer = document.createElement("div");
         particlesContainer.className = "particles";
         for (let i = 0; i < 20; i++) {
@@ -97,6 +107,7 @@ export default function Birthday() {
         }
         document.body.appendChild(particlesContainer);
 
+        // Floating Hearts
         const heartsContainer = document.createElement("div");
         heartsContainer.className = "floating-hearts";
         for (let i = 0; i < 12; i++) {
@@ -110,6 +121,7 @@ export default function Birthday() {
         }
         document.body.appendChild(heartsContainer);
 
+        // Snowflakes
         const snowflakesContainer = document.getElementById("snowflakes");
         for (let i = 0; i < 20; i++) {
             const snowflake = document.createElement("div");
