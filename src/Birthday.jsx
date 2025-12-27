@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import photos from "./data/photos"; // tumhare photos ka path
+import photos from "./data/photos"; // photos array
 
 const TOTAL_PHOTOS = photos.length;
 const BACKGROUND_PHOTOS = 60;
@@ -9,13 +9,9 @@ export default function Birthday() {
     const [direction, setDirection] = useState('next');
     const [isPlaying, setIsPlaying] = useState(false);
 
-
-
     // Audio setup
-    const audio = new Audio("/src/assets/music/song1.mp3"); // tumhare music ka path
+    const audio = new Audio("/music/song1.mp3"); // public folder se
     audio.loop = true;
-
-
 
     const toggleMusic = () => {
         if (isPlaying) {
@@ -35,7 +31,7 @@ export default function Birthday() {
     }, []);
 
     useEffect(() => {
-        return () => audio.pause(); // cleanup audio on unmount
+        return () => audio.pause(); // cleanup
     }, []);
 
     // Teddy bears floating
@@ -51,13 +47,13 @@ export default function Birthday() {
         teddyContainer.style.zIndex = 2;
 
         const teddyGIFs = [
-            "/src/assets/teddy/teddy1.jpeg",
-            "/src/assets/teddy/teddygif.webp",
-            "/src/assets/teddy/teddy2.gif",
-            "/src/assets/teddy/teddy3.gif",
-            "/src/assets/teddy/teddy4.gif",
-            "/src/assets/teddy/teddy5.gif",
-            "/src/assets/teddy/teddy6.gif"
+            "/teddy/teddy1.jpeg",
+            "/teddy/teddygif.webp",
+            "/teddy/teddy2.gif",
+            "/teddy/teddy3.gif",
+            "/teddy/teddy4.gif",
+            "/teddy/teddy5.gif",
+            "/teddy/teddy6.gif"
         ];
 
         for (let i = 0; i < 20; i++) {
@@ -74,13 +70,11 @@ export default function Birthday() {
         }
 
         document.body.appendChild(teddyContainer);
-
         return () => teddyContainer.remove();
     }, []);
 
     // Stars, particles, hearts, snowflakes
     useEffect(() => {
-        // Stars
         const starsContainer = document.getElementById("stars");
         for (let i = 0; i < 80; i++) {
             const star = document.createElement("div");
@@ -91,7 +85,6 @@ export default function Birthday() {
             starsContainer.appendChild(star);
         }
 
-        // Floating Particles
         const particlesContainer = document.createElement("div");
         particlesContainer.className = "particles";
         for (let i = 0; i < 20; i++) {
@@ -104,7 +97,6 @@ export default function Birthday() {
         }
         document.body.appendChild(particlesContainer);
 
-        // Floating Hearts
         const heartsContainer = document.createElement("div");
         heartsContainer.className = "floating-hearts";
         for (let i = 0; i < 12; i++) {
@@ -118,7 +110,6 @@ export default function Birthday() {
         }
         document.body.appendChild(heartsContainer);
 
-        // Snowflakes
         const snowflakesContainer = document.getElementById("snowflakes");
         for (let i = 0; i < 20; i++) {
             const snowflake = document.createElement("div");
@@ -142,8 +133,6 @@ export default function Birthday() {
     }
 
     return (
-
-
         <div className="wrapper">
             <div className="name-background">
                 {Array.from({ length: 50 }).map((_, i) => (
@@ -171,13 +160,6 @@ export default function Birthday() {
             <div className="stars" id="stars"></div>
             <div className="snowflakes" id="snowflakes"></div>
 
-            <div class="name-background">
-                <span>Nutan</span><span>Nutan</span><span>Nutan</span><span>Nutan</span>
-                <span>Nutan</span><span>Nutan</span><span>Nutan</span><span>Nutan</span>
-                <span>Nutan</span><span>Nutan</span><span>Nutan</span><span>Nutan</span>
-                <span>Nutan</span><span>Nutan</span><span>Nutan</span><span>Nutan</span>
-            </div>
-
             <div className="container">
                 <div className="photo-gallery">
                     <div className="photo-container">
@@ -190,12 +172,6 @@ export default function Birthday() {
                                 >
                                     <img src={photos[index]} alt={`Memory ${index + 1}`} className="photo-img" />
                                     <div className="photo-border"></div>
-                                    <div className="hearts-decoration">
-                                        <div className="heart-icon">💖</div>
-                                        <div className="heart-icon">💖</div>
-                                        <div className="heart-icon">💖</div>
-                                        <div className="heart-icon">💖</div>
-                                    </div>
                                 </div>
                             )
                         })}
