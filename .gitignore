@@ -23,6 +23,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Photos folder (ignore to keep private)
-src/assets/photos/
